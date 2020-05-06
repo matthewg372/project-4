@@ -22,6 +22,10 @@ class To_Do_List(Model):
 	user=ForeignKeyField(User, backref='ToDoList')
 	To_Do_Item=Charfield()
 
+class Friend(Model):
+	user=ForeignKeyField(User, backref='friends')
+	username=Charfield()
+
 class Post(Model):
 	user=ForeignKeyField(User, backref='posts')
 	Bio=Charfield()
@@ -70,10 +74,17 @@ _____________________________________
 
 url              |	httpVerb| result
 _____________________________________
+/api/friends     | POST   | create a friend
+/api/friends/<id>| GET    | get all posts by user
+/api/friends/<id>| DELETE | delete friend
+
+url              |	httpVerb| result
+_____________________________________
 /api/ToDo     | POST   | create a ToDo
 /api/ToDo/<id>| GET    | get all posts by user
 /api/ToDo     | PUT    | update a ToDo
 /api/ToDo/<id>| DELETE | delete ToDo
+
 
 url              |	httpVerb| result
 _____________________________________
