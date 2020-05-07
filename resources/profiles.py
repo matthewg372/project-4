@@ -38,11 +38,11 @@ def create_profile():
 	new_profile = models.Profile.create(
 		user=current_user.id,
 		images=payload['images'],
-		first_Name=payload['firstName'],
-		Last_Name=payload['lastName'],
-		days_Sober=payload['daysSober'],
-		Age=payload['age'],
-		Sponser=payload['sponsor'],
+		first_name=payload['first_name'],
+		last_name=payload['last_name'],
+		days_sober=payload['days_sober'],
+		date_of_birth=payload['date_of_birth'],
+		sponsor=payload['sponsor'],
 	)
 	profile_dict = model_to_dict(new_profile)
 	profile_dict['user'].pop('password')
@@ -77,14 +77,14 @@ def update_profile(id):
 	if current_user.id == profile_to_update.user.id:
 		if 'images' in payload:
 			profile_to_update.images=payload['images']
-		if 'firstName' in payload:
-			profile_to_update.first_Name=payload['firstName']
-		if 'lastName' in payload:
-			profile_to_update.Last_Name=payload['lastName']
-		if 'daysSober' in payload:
-			profile_to_update.days_Sober=payload['daysSober']
-		if 'Age' in payload:
-			profile_to_update.Age=payload['Age']
+		if 'first_name' in payload:
+			profile_to_update.first_name=payload['first_name']
+		if 'last_name' in payload:
+			profile_to_update.last_name=payload['last_name']
+		if 'days_sober' in payload:
+			profile_to_update.days_sober=payload['days_sober']
+		if 'date_of_birth' in payload:
+			profile_to_update.date_of_birth=payload['date_of_birth']
 		if 'sponsor' in payload:
 			profile_to_update.sponsor=payload['sponsor']
 		profile_to_update.save()

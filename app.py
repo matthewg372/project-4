@@ -3,6 +3,7 @@ import models
 from resources.users import users
 from resources.profiles import profiles
 from resources.to_do_lists import to_do_lists
+from resources.friendships import friendships
 from flask_login import LoginManager
 
 
@@ -29,7 +30,7 @@ def load_user(user_id):
 app.register_blueprint(users, url_prefix='/api/v1/users')
 app.register_blueprint(profiles, url_prefix='/api/v1/profiles')
 app.register_blueprint(to_do_lists, url_prefix='/api/v1/to_do_lists')
-
+app.register_blueprint(friendships, url_prefix='/api/v1/friendships')
 @app.route('/')
 def testing():
 	return 'hello working'

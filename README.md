@@ -82,7 +82,7 @@ _____________________________________
 
 url              |	httpVerb| result
 _____________________________________
-/api/friendship/    | POST   | create a friendship
+/api/friendship/<friend_id>| POST   | create a friendship
 /api/friendship/<id>| DELETE | delete friendship
 
 
