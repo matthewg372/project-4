@@ -10,30 +10,31 @@ class User(UserMixin, Model):
 class Profile(Model):
 	user=ForeignKeyField(User, backref='profiles')
 	images=textField()
-	first_Name=Charfield()
-	Last_Name=Charfield()
-	days_Sober=IntegerField()
-	Age=IntegerField()
-	Sponser=BooleanField()
-	Date=DateTimeField(default=datetime.datetime.now)
+	first_name=Charfield()
+	last_name=Charfield()
+	days_sober=IntegerField()
+	date=IntegerField()
+	sponsor=BooleanField()
+	date=DateTimeField(default=datetime.datetime.now)
 
-class To_Do_List(Model):
+class ToDoItem(Model):
 	user=ForeignKeyField(User, backref='ToDoList')
-	To_Do_Item=Charfield()
+	item=Charfield()
 
-class Friend(Model):
-	user=ForeignKeyField(User, backref='friends')
+class Friendship(Model):
+	user1=ForeignKeyField(User, backref='friends')
+	user2=ForeignKeyField(User, backref='friends')
 	username=Charfield()
 
 class Post(Model):
 	user=ForeignKeyField(User, backref='posts')
-	Bio=Charfield()
-	Date=DateTimeField(default=datetime.datetime.now)
+	bio=Charfield()
+	date=DateTimeField(default=datetime.datetime.now)
 
 class Comment(Model):
 	user=ForeignKeyField(User, backref='comments')
 	post=ForeignKeyField(Post, backref='comments')
-	Bio=Charfield()
+	bio=Charfield()
 
 
 ```
@@ -43,14 +44,13 @@ class Comment(Model):
 class Like(Model):
 	user = ForeignKeyField(User, backref='likes')
 	post = ForeignKeyField(Post, backref='likes')
-	likes=IntegerField()
 	class Meta:
 		database = DATABASE
 
-class Messages(Model):
-	Sender=Charfield()
-	Receiver=Charfield()
-	Content=Charfield()
+class Message(Model):
+	sender=ForeignKeyField(User, backref='sent_messages')
+	receiver=ForeignKeyField(User, backref='received_messages')
+	content=Charfield()
 	Date=DateTimeField(default=datetime.datetime.now)
 
 
@@ -59,47 +59,46 @@ class Messages(Model):
 ```
 url              |	httpVerb| result
 _____________________________________
-/api/users       | POST    | register a user
-/api/users       | POST    | login user
-/api/users       | GET     | logout user
-/api/users/<id>  | DELETE  | delete user
+/api/users/register| POST    | register a user
+/api/users/login   | POST    | login user
+/api/users/logout  | GET     | logout user
+/api/users/<id>    | DELETE  | delete user
 
 url              		|httpVerb | result
 _____________________________________
 /api/profile   		    | GET     | returns all profiles
-/api/profile    		| POST    | new profile created
-/api/profile/users/<id> | GET     | shows users profile
+/api/profile/    		| POST    | new profile created
+/api/profile/<user_id>  | GET     | shows user profile
 /api/profile/<id> 	    | Put     | update a profile
 /api/profile/<id>       | DELETE  | delete profile
 
 url              |	httpVerb| result
 _____________________________________
-/api/friends     | POST   | create a friend
-/api/friends/<id>| GET    | get all posts by user
-/api/friends/<id>| DELETE | delete friend
+/api/friendship/    | POST   | create a friendship
+/api/friendship/<id>| DELETE | delete friendship
 
-url              |	httpVerb| result
-_____________________________________
-/api/ToDo     | POST   | create a ToDo
-/api/ToDo/<id>| GET    | get all posts by user
-/api/ToDo     | PUT    | update a ToDo
-/api/ToDo/<id>| DELETE | delete ToDo
 
 
 url              |	httpVerb| result
 _____________________________________
-/api/post     | POST   | create a post
-/api/post/<id>| GET    | get all posts by user
-/api/post     | PUT    | update a post
+/api/post/    | POST   | create a post
+/api/post/    | GET    | get all posts
+/api/post/<id> PUT    | update a post
 /api/post/<id>| DELETE | delete post
 
+url                     |httpVerb | result
+_____________________________________
+/api/comments/<post_id> | POST    | create a comment
+/api/comments/<post_id> | GET     | get all comments for a specific post
+/api/comments/<id>      | PUT     | update a comment
+/api/comments/<id>      | DELETE  | delete comment
+
 url              |	httpVerb| result
 _____________________________________
-/api/comments      | POST    | create a comment
-/api/comments/<id> | GET     | get all comments for a specific post
-/api/comments      | PUT     | update a comment
-/api/comments/<id> | DELETE  | delete comment
-
+/api/todos/    | POST   | create a ToDo
+/api/todos/    | GET    | get all items from to do list
+/api/todos     | PUT    | update a ToDo
+/api/todos/<id>| DELETE | delete ToDo
 ```
 ```
 ##StretchGoal
