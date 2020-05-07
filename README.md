@@ -36,6 +36,14 @@ class Comment(Model):
 	post=ForeignKeyField(Post, backref='comments')
 	bio=Charfield()
 
+class Meeting(Model):
+	date=Charfield()
+	area=Charfield()
+	info=Charfield()
+	date=DateTimeField(default=datetime.datetime.now)
+	class Meta:
+		database = DATABASE
+
 
 ```
 ```
@@ -83,7 +91,7 @@ url              |	httpVerb| result
 _____________________________________
 /api/post/    | POST   | create a post
 /api/post/    | GET    | get all posts
-/api/post/<id> PUT    | update a post
+/api/post/<id>| PUT    | update a post
 /api/post/<id>| DELETE | delete post
 
 url                     |httpVerb | result
@@ -92,6 +100,13 @@ _____________________________________
 /api/comments/<post_id> | GET     | get all comments for a specific post
 /api/comments/<id>      | PUT     | update a comment
 /api/comments/<id>      | DELETE  | delete comment
+
+url              |	httpVerb| result
+_____________________________________
+/api/meeting/    | POST   | create a meeting
+/api/meeting/    | GET    | get all meetings
+/api/meeting     | PUT    | update a meeting
+/api/meeting/<id>| DELETE | delete meeting
 
 url              |	httpVerb| result
 _____________________________________
