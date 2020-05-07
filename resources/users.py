@@ -33,7 +33,7 @@ def register():
 			status=201
 		),201
 
-@users.route('login', methods=['POST'])
+@users.route('/login', methods=['POST'])
 def login():
 	payload = request.get_json()
 	payload['email'] = payload['email'].lower()
@@ -64,7 +64,14 @@ def login():
 		),401
 
 
-
+@users.route('/logout', methods=['GET'])
+def logout():
+	logout_user()
+	return jsonify(
+		data={},
+		message="succesfully logged out",
+		status=200
+	), 200
 
 
 
