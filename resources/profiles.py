@@ -56,3 +56,44 @@ def delete_profile(id):
 			message="you must be logged in",
 			status=403
 			),403
+@profiles.route('/<id>', methods=['PUT'])
+def update_profile(id):
+	payload = request.get_json()
+	profile_to_update = models.Profile.get_by_id(id)
+	print("--------",profile_to_update.first_Name)
+	if current_user.id == profile_to_update.user.id:
+		if 'images' in payload:
+			profile_to_update.images=payload['images']
+		if 'firstName' in payload:
+			profile_to_update.first_Name=payload['firstName']
+		if 'lastName' in payload:
+			profile_to_update.Last_Name=payload['lastName']
+		if 'daysSober' in payload:
+			profile_to_update.days_Sober=payload['daysSober']
+		if 'Age' in payload:
+			profile_to_update.Age=payload['Age']
+		if 'sponsor' in payload:
+			profile_to_update.sponsor=payload['sponsor']
+		profile_to_update.save()
+		profile_updated_dict = model_to_dict(profile_to_update)
+		profile_updated_dict['user'].pop('password')
+		return jsonify(
+			data=profile_updated_dict,
+			message=f"successfully updated {id}",
+			status=200
+		),200
+	else:
+		return jsonify(
+			data={},
+			message="you must be logged in to update",
+			status=403
+		), 403
+
+
+
+
+
+
+
+
+
