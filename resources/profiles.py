@@ -19,6 +19,19 @@ def user_products_index(id):
 		status= 200
 	), 200
 
+@profiles.route('/all', methods=['GET'])
+def all_profiles():
+	print('working')
+	profiles = models.Profile.select()
+	profiles_dicts = [model_to_dict(profile) for profile in profiles]
+	for profile_dict in profiles_dicts:
+		profile_dict['user'].pop('password')
+	return jsonify(
+		data=profiles_dicts,
+		message="successfully showed all profiles",
+		status=200
+	),200
+
 @profiles.route('/', methods=['POST'])
 def create_profile():
 	payload = request.get_json()
