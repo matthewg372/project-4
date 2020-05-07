@@ -70,6 +70,7 @@ _____________________________________
 /api/profile    		| POST    | new profile created
 /api/profile/users/<id> | GET     | shows users profile
 /api/profile/<id> 	    | Put     | update a profile
+/api/profile/<id>       | DELETE  | delete profile
 
 url              |	httpVerb| result
 _____________________________________
