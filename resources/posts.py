@@ -77,5 +77,25 @@ def delete_post(id):
 			status=403
 		), 403
 
-
+@posts.route('/<id>', methods=['PUT'])
+def update_post(id):
+	payload = request.get_json()
+	post_to_update = models.Post.get_by_id(id)
+	if current_user.id == post_to_update.user.id:
+		if 'bio' in payload:
+			post_to_update.bio=payload['bio']
+		post_to_update.save()
+		updated_post_dict = model_to_dict(post_to_update)
+		updated_post_dict['user'].pop('password')
+		return jsonify(
+			data=updated_post_dict,
+			message=f"succesfully updated {id}",
+			status=200
+		),200
+	else:
+		return jsonify(
+			data={},
+			message=f"you must be logged in to updated",
+			status=403
+		), 403
 
