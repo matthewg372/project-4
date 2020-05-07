@@ -35,3 +35,20 @@ def create_friendship(id):
 		status=200
 		),200
 
+@friendships.route('/<id>', methods=['DELETE'])
+def delete_friend(id):
+	friend_to_delete = models.Friendship.get_by_id(id)
+	if current_user.id == friend_to_delete.user1.id:
+		delete_query = models.Friendship.delete().where(models.Friendship.id == id)
+		delete_query.execute()
+		return jsonify(
+			data={},
+			message=f"succesfully deleted {id}",
+			status=200
+		), 200
+	else:
+		return jsonify(
+			data={},
+			message="you must be logged in to delete this",
+			status=403
+		), 403
