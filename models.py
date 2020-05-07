@@ -21,7 +21,6 @@ class Profile(Model):
 	days_Sober=IntegerField()
 	Age=IntegerField()
 	Sponser=BooleanField()
-	Friends=CharField()
 	Date=DateTimeField(default=datetime.datetime.now)
 	class Meta:
 		database = DATABASE

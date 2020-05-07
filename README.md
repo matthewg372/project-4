@@ -15,7 +15,6 @@ class Profile(Model):
 	days_Sober=IntegerField()
 	Age=IntegerField()
 	Sponser=BooleanField()
-	Friends=Charfield()
 	Date=DateTimeField(default=datetime.datetime.now)
 
 class To_Do_List(Model):

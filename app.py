@@ -1,6 +1,7 @@
 from flask import Flask
 import models
 from resources.users import users
+from resources.profiles import profiles
 from flask_login import LoginManager
 
 
@@ -25,6 +26,7 @@ def load_user(user_id):
 
 
 app.register_blueprint(users, url_prefix='/api/v1/users')
+app.register_blueprint(profiles, url_prefix='/api/v1/profiles')
 
 
 @app.route('/')
