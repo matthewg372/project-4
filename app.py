@@ -5,6 +5,7 @@ from resources.profiles import profiles
 from resources.to_do_lists import to_do_lists
 from resources.friendships import friendships
 from resources.posts import posts
+from resources.comments import comments
 from flask_login import LoginManager
 
 
@@ -33,6 +34,7 @@ app.register_blueprint(profiles, url_prefix='/api/v1/profiles')
 app.register_blueprint(to_do_lists, url_prefix='/api/v1/to_do_lists')
 app.register_blueprint(friendships, url_prefix='/api/v1/friendships')
 app.register_blueprint(posts, url_prefix='/api/v1/posts')
+app.register_blueprint(comments, url_prefix='/api/v1/comments')
 @app.route('/')
 def testing():
 	return 'hello working'

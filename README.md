@@ -17,10 +17,6 @@ class Profile(Model):
 	sponsor=BooleanField()
 	date=DateTimeField(default=datetime.datetime.now)
 
-class ToDoItem(Model):
-	user=ForeignKeyField(User, backref='ToDoList')
-	item=Charfield()
-
 class Friendship(Model):
 	user1=ForeignKeyField(User, backref='friends')
 	user2=ForeignKeyField(User, backref='friends')
@@ -43,6 +39,10 @@ class Meeting(Model):
 	date=DateTimeField(default=datetime.datetime.now)
 	class Meta:
 		database = DATABASE
+
+class ToDoItem(Model):
+	user=ForeignKeyField(User, backref='ToDoList')
+	item=Charfield()
 
 
 ```
