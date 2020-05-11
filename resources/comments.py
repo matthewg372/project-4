@@ -7,7 +7,6 @@ from flask_login import current_user, login_required
 comments = Blueprint('comments', 'comments')
 
 @comments.route('/<id>', methods=['GET'])
-@login_required
 def user_products_index(id):
 	user_comment = models.Post.get_by_id(id)
 	current_user_comment_dicts = [model_to_dict(comment) for comment in user_comment.comments]

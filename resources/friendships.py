@@ -7,6 +7,7 @@ friendships = Blueprint('friendships', 'friendships')
 
 
 @friendships.route('/user/<id>', methods=['GET'])
+@login_required
 def find_friends(id):
 	user_frindship = models.User.get_by_id(id)
 	current_user_friendship_dicts = [model_to_dict(friendship) for friendship in user_frindship.friends]
@@ -20,6 +21,7 @@ def find_friends(id):
 	),200
 
 @friendships.route('/<id>', methods=['POST'])
+@login_required
 def create_friendship(id):
 	friend_id = models.User.get_by_id(id)
 	new_friendship = models.Friendship.create(
@@ -36,6 +38,7 @@ def create_friendship(id):
 		),200
 
 @friendships.route('/<id>', methods=['DELETE'])
+@login_required
 def delete_friend(id):
 	friend_to_delete = models.Friendship.get_by_id(id)
 	if current_user.id == friend_to_delete.user1.id:

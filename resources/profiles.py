@@ -7,6 +7,7 @@ profiles = Blueprint('profiles', 'profiles')
 
 
 @profiles.route('/user/<id>', methods=['GET'])
+@login_required
 def user_products_index(id):
 	user_profile = models.User.get_by_id(id)
 	current_user_profile_dicts = [model_to_dict(product) for product in user_profile.profiles]
@@ -20,8 +21,8 @@ def user_products_index(id):
 	), 200
 
 @profiles.route('/all', methods=['GET'])
+@login_required
 def all_profiles():
-	print('working')
 	profiles = models.Profile.select()
 	profiles_dicts = [model_to_dict(profile) for profile in profiles]
 	for profile_dict in profiles_dicts:
@@ -33,6 +34,7 @@ def all_profiles():
 	),200
 
 @profiles.route('/', methods=['POST'])
+@login_required
 def create_profile():
 	payload = request.get_json()
 	new_profile = models.Profile.create(
@@ -51,7 +53,10 @@ def create_profile():
 		message="successfully created profile",
 		status=200
 	),200
+
+
 @profiles.route('/<id>', methods=['DELETE'])
+@login_required
 def delete_profile(id):
 	profile_to_delete = models.Profile.get_by_id(id)
 	if current_user.id == profile_to_delete.user.id:
@@ -70,10 +75,10 @@ def delete_profile(id):
 			status=403
 			),403
 @profiles.route('/<id>', methods=['PUT'])
+@login_required
 def update_profile(id):
 	payload = request.get_json()
 	profile_to_update = models.Profile.get_by_id(id)
-	print("--------",profile_to_update.first_Name)
 	if current_user.id == profile_to_update.user.id:
 		if 'images' in payload:
 			profile_to_update.images=payload['images']

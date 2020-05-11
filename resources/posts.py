@@ -29,6 +29,7 @@ posts = Blueprint('posts', 'posts')
 # 				status=200
 # 			),200
 @posts.route('/<id>', methods=['GET'])
+@login_required
 def all_posts(id):
 		user_posts = models.User.get_by_id(id)
 		current_user_post_dicts = [model_to_dict(post) for post in user_posts.posts]	
@@ -41,8 +42,22 @@ def all_posts(id):
 				status=200
 			),200
 
+@posts.route('/all/<id>', methods=['GET'])
+def all(id):
+		user = models.User.get_by_id(id)
+		current_user_post_dicts = [model_to_dict(friendship) for friendship in user.friends]
+		for friend_post_dicts in current_user_post_dicts:
+			all_users = models.User.get_by_id(friend_post_dicts['user1']['id'])
+			current_friends_post_dicts = [model_to_dict(posts) for posts in all_users.posts]
+		if models.DoesNotExist:
+			return jsonify(
+				data=current_friends_post_dicts,
+				message=f"successfully found {len(current_friends_post_dicts)} posts ",
+				status=200
+			),200
 
 @posts.route('/', methods=['POST'])
+@login_required
 def create_posts():
 	payload = request.get_json()
 	new_post = models.Post.create(
@@ -60,6 +75,7 @@ def create_posts():
 
 """ delete specific post """
 @posts.route('/<id>', methods=['DELETE'])
+@login_required
 def delete_post(id):
 	post_to_delete = models.Post.get_by_id(id)
 	if current_user.id == post_to_delete.user.id:
@@ -78,6 +94,7 @@ def delete_post(id):
 		), 403
 
 @posts.route('/<id>', methods=['PUT'])
+@login_required
 def update_post(id):
 	payload = request.get_json()
 	post_to_update = models.Post.get_by_id(id)

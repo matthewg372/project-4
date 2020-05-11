@@ -51,8 +51,17 @@ class Comment(Model):
 	class Meta:
 		database = DATABASE
 
+class Meeting(Model):
+	user=ForeignKeyField(User, backref='meetings')
+	time=CharField()
+	area=CharField()
+	info=CharField()
+	date=DateTimeField(default=datetime.datetime.now)
+	class Meta:
+		database = DATABASE
+
 def initialize():
 	DATABASE.connect()
-	DATABASE.create_tables([User, Profile, ToDoItem, Friendship, Post, Comment], safe=True)
+	DATABASE.create_tables([User, Profile, ToDoItem, Friendship, Post, Comment, Meeting], safe=True)
 	print('connected to models and tables')
 	DATABASE.close()

@@ -21,11 +21,12 @@ def user_products_index(id):
 	), 200
 
 @to_do_lists.route('/', methods=['POST'])
+@login_required
 def create_to_do_list():
 	payload = request.get_json()
 	new_list = models.To_Do_List.create(
 		user=current_user.id,
-		To_Do_Item=payload['to_do_item']
+		item=payload['item']
 		)
 	list_item_dict = model_to_dict(new_list)
 	list_item_dict['user'].pop('password')
@@ -36,6 +37,7 @@ def create_to_do_list():
 	),200
 
 @to_do_lists.route('/<id>', methods=['DELETE'])
+@login_required
 def delete_list_item(id):
 	list_item_to_delete = models.To_Do_List.get_by_id(id)
 	if current_user.id == list_item_to_delete.user.id:
@@ -52,3 +54,7 @@ def delete_list_item(id):
 			message="you must be logged in to delete this",
 			status=403
 		), 403
+
+
+
+

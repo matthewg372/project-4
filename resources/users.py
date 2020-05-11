@@ -6,6 +6,8 @@ from flask_login import login_user, current_user, logout_user
 
 users = Blueprint('users', 'users')
 
+@users.route('/', methods=['GET'])
+
 @users.route('/register', methods=['POST'])
 def register():
 	payload = request.get_json()
