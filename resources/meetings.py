@@ -56,6 +56,33 @@ def delete_meeting(id):
 			status=403
 			),403
 
+@meetings.route('/<id>', methods=['PUT'])
+@login_required
+def update_meeting(id):
+	payload = request.get_json()
+	meeting_to_update = models.Meeting.get_by_id(id)
+	if current_user.id == meeting_to_update.user.id:
+		if 'info' in payload:
+			meeting_to_update.info=payload['info']
+		if 'area' in payload:
+			meeting_to_update.area=payload['area']
+		if 'time' in payload:
+			meeting_to_update.time=payload['time']
+		meeting_to_update.save()
+		updated_meeting_dict = model_to_dict(meeting_to_update)
+		updated_meeting_dict['user'].pop('password')
+		return jsonify(
+			data=updated_meeting_dict,
+			message=f"succesfully updated {id}",
+			status=200
+		),200
+	else:
+		return jsonify(
+			data={},
+			message=f"you must be logged in to updated",
+			status=403
+		), 403
+
 
 
 
