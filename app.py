@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, g
-import models
 import os
+import models
 from resources.users import users
 from resources.profiles import profiles
 from resources.to_do_lists import to_do_lists
@@ -52,6 +52,7 @@ app.register_blueprint(posts, url_prefix='/api/v1/posts')
 app.register_blueprint(comments, url_prefix='/api/v1/comments')
 app.register_blueprint(meetings, url_prefix='/api/v1/meetings')
 
+
 @app.before_request 
 def before_request():
 	print("you should see this before each request") 
@@ -64,10 +65,10 @@ def after_request(response):
 	g.db.close()
 	return response 
 
-
 @app.route('/')
 def testing():
 	return 'hello working'
+	
 
 if 'ON_HEROKU' in os.environ: 
 	print('\non heroku!')
