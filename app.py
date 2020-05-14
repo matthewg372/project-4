@@ -35,13 +35,13 @@ def unauthorized():
 		status=401
 	),401
 
-cors = CORS(users, origins=['http://localhost:3000'], supports_credentials=True)
-cors = CORS(profiles, origins=['http://localhost:3000'], supports_credentials=True)
-cors = CORS(to_do_lists, origins=['http://localhost:3000'], supports_credentials=True)
-cors = CORS(friendships, origins=['http://localhost:3000'], supports_credentials=True)
-cors = CORS(posts, origins=['http://localhost:3000'], supports_credentials=True)
-cors = CORS(comments, origins=['http://localhost:3000'], supports_credentials=True)
-cors = CORS(meetings, origins=['http://localhost:3000'], supports_credentials=True)
+cors = CORS(users, origins=['http://localhost:3000','https://ahn-react.herokuapp.com/'], supports_credentials=True)
+cors = CORS(profiles, origins=['http://localhost:3000','https://ahn-react.herokuapp.com/'], supports_credentials=True)
+cors = CORS(to_do_lists, origins=['http://localhost:3000','https://ahn-react.herokuapp.com/'], supports_credentials=True)
+cors = CORS(friendships, origins=['http://localhost:3000','https://ahn-react.herokuapp.com/'], supports_credentials=True)
+cors = CORS(posts, origins=['http://localhost:3000','https://ahn-react.herokuapp.com/'], supports_credentials=True)
+cors = CORS(comments, origins=['http://localhost:3000','https://ahn-react.herokuapp.com/'], supports_credentials=True)
+cors = CORS(meetings, origins=['http://localhost:3000','https://ahn-react.herokuapp.com/'], supports_credentials=True)
 
 
 app.register_blueprint(users, url_prefix='/api/v1/users')
@@ -68,7 +68,7 @@ def after_request(response):
 @app.route('/')
 def testing():
 	return 'hello working'
-	
+
 if 'ON_HEROKU' in os.environ: 
   print('\non heroku!')
   models.initialize()
