@@ -28,6 +28,10 @@ posts = Blueprint('posts', 'posts')
 # 				message="successfully found posts",
 # 				status=200
 # 			),200
+
+
+
+
 @posts.route('/<id>', methods=['GET'])
 @login_required
 def all_posts(id):
@@ -42,19 +46,24 @@ def all_posts(id):
 				status=200
 			),200
 
+
+
 @posts.route('/all/<id>', methods=['GET'])
 def all(id):
 		user = models.User.get_by_id(id)
-		current_user_post_dicts = [model_to_dict(friendship) for friendship in user.friends]
-		for friend_post_dicts in current_user_post_dicts:
-			all_users = models.User.get_by_id(friend_post_dicts['user1']['id'])
-			current_friends_post_dicts = [model_to_dict(posts) for posts in all_users.posts]
-		if models.DoesNotExist:
-			return jsonify(
-				data=current_friends_post_dicts,
-				message=f"successfully found {len(current_friends_post_dicts)} posts ",
-				status=200
-			),200
+		posts = []
+		for friendship in user.friends:
+			posts_dicts = [model_to_dict(post) for post in friendship.user1.posts]
+			for friends_posts in posts_dicts:
+				friends_posts['user'].pop('password')
+				posts.append(friends_posts)
+				print(friends_posts)
+
+		return jsonify(
+			data=posts,
+			message=f"successfully found {len(friends_posts)} posts ",
+			status=200
+		),200
 
 @posts.route('/', methods=['POST'])
 @login_required
@@ -62,7 +71,8 @@ def create_posts():
 	payload = request.get_json()
 	new_post = models.Post.create(
 		user=current_user.id,
-		bio=payload['bio']
+		bio=payload['bio'],
+		images=payload['images']
 	)
 	post_dict = model_to_dict(new_post)
 	post_dict['user'].pop('password')

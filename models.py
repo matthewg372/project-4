@@ -1,10 +1,16 @@
 from peewee import *
-
+import os
 from flask_login import UserMixin
 import datetime
 
+if 'ON_HEROKU' in os.environ: 
+  	DATABASE = connect(os.environ.get('DATABASE_URL'))
+  	print(DATABASE)
+  	
+else:
+	DATABASE = SqliteDatabase('profiles.sqlite')
 
-DATABASE = SqliteDatabase('profiles.sqlite')
+
 
 class User(UserMixin, Model):
 	username=CharField(unique=True)
@@ -39,6 +45,7 @@ class Friendship(Model):
 
 class Post(Model):
 	user=ForeignKeyField(User, backref='posts')
+	images=CharField()
 	bio=CharField()
 	date=DateTimeField(default=datetime.datetime.now)
 	class Meta:
@@ -56,6 +63,8 @@ class Meeting(Model):
 	time=CharField()
 	area=CharField()
 	info=CharField()
+	lat=CharField()
+	longitude=CharField()
 	date=DateTimeField(default=datetime.datetime.now)
 	class Meta:
 		database = DATABASE

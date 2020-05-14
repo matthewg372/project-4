@@ -25,7 +25,10 @@ def create_meeting():
 		user=current_user.id,
 		info=payload['info'],
 		area=payload['area'],
-		time=payload['time']
+		time=payload['time'],
+		
+		lat=payload['lat'],
+		longitude=payload['longitude']
 
 	)
 	meeting_dict = model_to_dict(new_meeting)
@@ -68,6 +71,10 @@ def update_meeting(id):
 			meeting_to_update.area=payload['area']
 		if 'time' in payload:
 			meeting_to_update.time=payload['time']
+		if 'longitude' in payload:
+			meeting_to_update.longitude=payload['longitude']
+		if 'lat' in payload:
+			meeting_to_update.lat=payload['lat']
 		meeting_to_update.save()
 		updated_meeting_dict = model_to_dict(meeting_to_update)
 		updated_meeting_dict['user'].pop('password')
