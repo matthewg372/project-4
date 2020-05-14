@@ -20,18 +20,6 @@ app.secret_key = "ajhskdjasdhkasdjhkaiudhajugjhgdjhsgfhgjskdhjkfhjashd"
 login_manager = LoginManager()
 login_manager.init_app(app)
 
-@app.before_request 
-def before_request():
-	print("you should see this before each request") 
-	g.db = models.DATABASE
-	g.db.connect()
-
-@app.after_request 
-def after_request(response):
-	print("you should see this after each request") 
-	g.db.close()
-	return response 
-
 @login_manager.user_loader
 def load_user(user_id):
 	try:
@@ -63,6 +51,18 @@ app.register_blueprint(friendships, url_prefix='/api/v1/friendships')
 app.register_blueprint(posts, url_prefix='/api/v1/posts')
 app.register_blueprint(comments, url_prefix='/api/v1/comments')
 app.register_blueprint(meetings, url_prefix='/api/v1/meetings')
+
+@app.before_request 
+def before_request():
+	print("you should see this before each request") 
+	g.db = models.DATABASE
+	g.db.connect()
+
+@app.after_request 
+def after_request(response):
+	print("you should see this after each request") 
+	g.db.close()
+	return response 
 
 
 @app.route('/')
