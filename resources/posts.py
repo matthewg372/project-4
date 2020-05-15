@@ -6,29 +6,6 @@ from flask_login import current_user, login_required
 
 posts = Blueprint('posts', 'posts')
 
-# @posts.route('/<id>', methods=['GET'])
-# def all_posts(id):
-# 		user_posts = models.User.get_by_id(id)
-# 		friends_posts = models.Friendship['user2'].get_by_id(id)
-# 		current_user_post_dicts = [model_to_dict(post) for post in user_posts.posts]
-# 		current_friend_post_dicts = [model_to_dict(post) for post in friends_posts.posts]
-# 		for post_dict in current_user_post_dicts:
-# 			post_dict['user'].pop('password')
-# 		for friend_post_dict in current_friend_post_dicts:
-# 			friend_post_dict['user'].pop('password')
-# 		if models.DoesNotExist:
-# 			return jsonify(
-# 				data={current_user_post_dicts},
-# 				message="successfully found posts",
-# 				status=200
-# 			),200
-# 		else:
-# 			return jsonify(
-# 				data={current_friend_post_dicts, current_user_post_dicts},
-# 				message="successfully found posts",
-# 				status=200
-# 			),200
-
 
 
 
@@ -61,7 +38,7 @@ def all(id):
 
 		return jsonify(
 			data=posts,
-			message=f"successfully found {len(friends_posts)} posts ",
+			message=f"successfully found posts ",
 			status=200
 		),200
 

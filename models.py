@@ -24,8 +24,8 @@ class Profile(Model):
 	first_name=CharField()
 	last_name=CharField()
 	days_sober=IntegerField()
-	date_of_birth=IntegerField()
-	sponsor=BooleanField()
+	date_of_birth=CharField()
+	sponsor=CharField()
 	date=DateTimeField(default=datetime.datetime.now)
 	class Meta:
 		database = DATABASE
