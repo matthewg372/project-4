@@ -34,7 +34,6 @@ def all_profiles():
 	),200
 
 @profiles.route('/', methods=['POST'])
-@login_required
 def create_profile():
 	payload = request.get_json()
 	new_profile = models.Profile.create(
